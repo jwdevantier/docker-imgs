@@ -65,6 +65,7 @@ services:
     environment:
       cfg_zookeeper_connect: zk1:2181,zk2:2181,zk3:2181
       cfg_broker_id: 1
+      cfg_advertised_listeners: PLAINTEXT://$DOCKER_IP:9921
   
   kf2:
     build:
@@ -79,6 +80,7 @@ services:
     environment:
       cfg_zookeeper_connect: zk1:2181,zk2:2181,zk3:2181
       cfg_broker_id: 2
+      cfg_advertised_listeners: PLAINTEXT://$DOCKER_IP:9922
   
   kf3:
     build:
@@ -93,6 +95,7 @@ services:
     environment:
       cfg_zookeeper_connect: zk1:2181,zk2:2181,zk3:2181
       cfg_broker_id: 3
+      cfg_advertised_listeners: PLAINTEXT://$DOCKER_IP:9923
 
 volumes:
   zk1_data:
