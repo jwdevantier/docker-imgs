@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${DIR}"
+source ./utils.sh
+
+env2conf
+
+gotpl "${KAFKA_CONF}/server.properties.tmpl" > "${KAFKA_CONF}/server.properties" < "/tmp/vars.yml"
+
+if [[ "$#" -ne "0" ]]; then
+  echo "[kafka] Arguments given, running command..."
+  exec $*
+else
+  # Start Kafka
+  ${KAFKA_HOME}/bin/kafka-server-start.sh "${KAFKA_CONF}/server.properties"
+fi

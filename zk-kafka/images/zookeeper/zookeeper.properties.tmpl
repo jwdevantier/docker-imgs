@@ -1,0 +1,24 @@
+# define time (in ms) per tick
+tickTime={{ .tick_time }}
+# amount of time (in ticks) to allow servers to connect and sync with a ZK leader
+# (should be increased as amount of data in ZK ensemble increases)
+initLimit={{ .init_limit }}
+# amount of time (in ticks) to allow followers to sync with ZK leader
+# (falling too far behind means the server is dropped)
+syncLimit={{ .sync_limit }}
+
+# Note: highly recommended to locate dataDir & dataLogDir on 2 physically separate devices
+#       write speed has a large impact on ZK latency
+dataDir={{ .data_dir }}
+dataLogDir={{ .data_log_dir }}
+clientPort=2181
+maxClientCnxns={{ .max_client_connections }}
+
+# format: server<ZK-ID>=<hostname>:<peerPort>:<leaderPort>
+{{- range $id, $server := .servers }}
+{{- if eq $.myid  $id }}
+server.{{ $id }}=0.0.0.0:2888:3888
+{{- else }}
+server.{{ $id }}={{ $server }}:2888:3888
+{{- end }}
+{{- end }}
