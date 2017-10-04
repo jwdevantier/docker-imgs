@@ -97,6 +97,18 @@ services:
       cfg_broker_id: 3
       cfg_advertised_listeners: PLAINTEXT://$DOCKER_IP:9923
 
+  schemareg:
+    hostname: schema_registry
+    image: confluentinc/cp-schema-registry:3.3.0
+    restart: always
+    ports:
+      - "8081:8081"
+    networks:
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zk1:2181,zk2:2181,zk3:2181
+
 volumes:
   zk1_data:
   zk1_log:
